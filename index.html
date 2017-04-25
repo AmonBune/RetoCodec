@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Reto Codec copyright by GamerBeast004-->
+		<meta charset="utf-8" />
+		<title>Reto Codec</title>
+		<script>
+			var TABLE = [
+				"plantuml","geili","s_Beste_isch_eh","es_git_nüt_bessers_als", // 0...4
+				"C","C++","JS","Python", // 5...8
+				"Pointer","Variable","Reference","Method", // 9...B
+				"low-level","Terminal","Xfce","Linux" // C...F
+			];
+
+			function reto_enc() {
+				var enctextbox = document.getElementById('enctext');
+				var input = enctextbox.value;
+				var output = [];
+				for (var i = 0; i < input.length; i++) {
+					var charcode = input.charCodeAt(i);
+					output.push(TABLE[charcode & 0xF]); // Low nibble
+					output.push(TABLE[charcode >> 4]); // High nibble
+				}
+				alert(output.join(" "));
+			}
+
+			function reto_dec() {
+				var dectextbox = document.getElementById('dectext');
+				var input = dectextbox.value;
+				var input_split = input.split(" ");
+				var output = [];
+				for (var i = 0; i < input_split.length; i+=2) {
+					var low = TABLE.indexOf(input_split[i]);
+					var high = TABLE.indexOf(input_split[i+1]);
+					output.push(String.fromCharCode((high << 4) + low));
+				}
+				alert(output.join(""));
+			}
+		</script>
+		<style type="text/css">
+			* {
+				font-family:Verdana;
+			}
+			body {
+				background-color: darkblue;
+				color: white;
+			}
+			
+			h1 {
+				margin:5pt;
+				
+				font-size:46pt;
+				float:left;
+			}
+			
+			h2 {
+				margin: 10pt 0pt 0pt 15pt;
+				
+				/* Safari */
+				-webkit-transform: rotate(-30deg);
+
+				/* Firefox */
+				-moz-transform: rotate(-30deg);
+
+				/* IE */
+				-ms-transform: rotate(-30deg);
+
+				/* Opera */
+				-o-transform: rotate(-30deg);
+
+				/* Internet Explorer */
+				filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+				
+				font-family:Comic Sans MS;
+				
+				font-size:30pt;
+				float:left;
+			}
+						
+			#copyright {
+				margin:30pt 30pt 0pt 0pt;
+				float:right;
+			}
+			
+			#copyrightlink {
+				color:red;
+			}
+			
+			.wrapper {
+				clear:left;
+			}
+			
+			.maincontainer {
+				width:600pt;
+				height:500pt;
+				
+				margin:10pt;
+				
+				float:left;
+			}
+			
+			.textfield {
+				width:600pt;
+				height:500pt;
+				
+				float:left;
+				
+				text-align:left;
+			}
+			
+			.submitbutton {
+				width:350pt;
+				height:80pt;
+				
+				margin:20pt 0pt 0pt 0pt;
+				
+				float:left;
+				
+				font-size: 24pt;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>Reto Codec</h1>
+		<h2>wörka<br/>&nbsp;holic</h2>
+		<div class="wrapper">
+			<div class="maincontainer">
+				<form id="encodeform" action="javascript:reto_enc()">
+					<textarea id="enctext" form="encodeform" class="textfield"></textarea>
+					<input type="submit" value="Get the plantuml" class="submitbutton">
+				</form>
+			</div>
+			<div class="maincontainer">
+				<form id="decodeform" action="javascript:reto_dec()">
+					<textarea id="dectext" form="decodeform" class="textfield"></textarea>
+					<input type="submit" value="Get human readable text" class="submitbutton">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
